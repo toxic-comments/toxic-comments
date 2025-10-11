@@ -1,0 +1,5 @@
+[core]
+    remote = myremote
+['remote "myremote"']
+    url = s3://data-repo
+    endpointurl = https://storage.yandexcloud.net/
