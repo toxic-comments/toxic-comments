@@ -1,26 +1,27 @@
 # Линейные ML-модели
 
-## **1. Ключевая метрика**  
+## Ключевая метрика
 В качестве ключевой метрики для нашей модели многоклассовой классификации была выбрана **F1 macro**, так как она подходит
 для несбалансированных классов, а также учитывает одновременно и recall и precision. Дополнительно была рассмотрена 
-метрика PR-AUC, чтобы оценить качество моделей без привязки к конкретному порогу. 
+метрика PR-AUC, чтобы оценить качество моделей без привязки к конкретному порогу.
 
-| Признаки                              | Модель             | F1-macro |
-|---------------------------------------|--------------------|----------|
-| BoW                                   | LogisticRegression | 0.82     |
-| fasttext                              | LogisticRegression | 0.7      |
+## Сводная таблица результатов
+
+| Признаки                            | Модель             | F1-macro |
+|-------------------------------------|--------------------|----------|
+| BoW                                 | LogisticRegression | 0.82     |
+| fasttext                            | LogisticRegression | 0.7      |
 | word2vec-araneum + кастомные признаки | LogisticRegression | 0.68     |
-| BERT                                  | LogisticRegression | 0.65     |
-| word2vec-araneum                      | LogisticRegression | 0.63     |
-| word2vec-araneum                      | KNN                | 0.61     |
-| BoW + PCA                             | KNN           | 0.59     |
-| word2vec-ruscorpora                   | KNN           | 0.58     |
-| word2vec-ruscorpora                   | LogisticRegression           | 0.57     |
-| BoW + PCA                             | LogisticRegression           | 0.57     |
-| BoW + KNN                             | LogisticRegression           | 0.53     |
+| BERT                                | LogisticRegression | 0.65     |
+| word2vec-araneum                    | LogisticRegression | 0.63     |
+| word2vec-araneum                    | KNN                | 0.61     |
+| BoW + PCA                           | KNN           | 0.59     |
+| word2vec-ruscorpora                 | KNN           | 0.58     |
+| word2vec-ruscorpora                 | LogisticRegression           | 0.57     |
+| BoW + PCA                           | LogisticRegression           | 0.57     |
+| BoW                              | KNN           | 0.53     |
 
-
-## Линейные модели классификации
+## Описание моделей
 
 ### Модель fasttext + LogisticRegression
 
