@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from routers import forward, history
+import history, forward
 
 app = FastAPI()
 
