@@ -1,8 +1,25 @@
-from db import engine
+from fastapi.params import Depends
+from sqlalchemy.orm import Session
 
-def get_connection():
-    connection = engine.connect()
+from database import engine
+from inference import ToxicityPredictor
+from service import ToxicityService
+
+
+def get_session():
+    session = Session(engine)
     try:
-        yield connection
+        yield session
     finally:
-        connection.close()
+        session.close()
+
+
+def get_predictor():
+    return ToxicityPredictor()
+
+
+def get_toxicity_service(
+        session: Session = Depends(get_session),
+        predictor: ToxicityPredictor = Depends(get_predictor)
+):
+    return ToxicityService(session, predictor)

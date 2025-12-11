@@ -1,7 +1,6 @@
 from fastapi import FastAPI
-import history, forward
+
+import router
 
 app = FastAPI()
-
-app.include_router(forward.router)
-app.include_router(history.router)
+app.include_router(router.router)

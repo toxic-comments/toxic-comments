@@ -20,7 +20,7 @@ depends_on: Union[str, Sequence[str], None] = None
 def upgrade() -> None:
     """Upgrade schema."""
     op.create_table(
-        "forward_history",
+        "forward_call",
         sa.Column("id", sa.Integer, primary_key=True),
         sa.Column("start_time", sa.DateTime, nullable=False),
         sa.Column("finish_time", sa.DateTime, nullable=False)
