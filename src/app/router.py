@@ -2,8 +2,8 @@ from fastapi import APIRouter
 from fastapi.params import Depends
 from pydantic import BaseModel
 
-from dependencies import get_toxicity_service
-from service import ToxicityService
+from app.dependencies import get_toxicity_service
+from app.service import ToxicityService
 
 
 class MessageData(BaseModel):

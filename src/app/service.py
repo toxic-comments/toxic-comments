@@ -2,8 +2,8 @@ from datetime import datetime
 
 from sqlalchemy.orm import Session
 
-from database import ForwardCall
-from inference import ToxicityPredictor
+from app.database import ForwardCall
+from app.inference import ToxicityPredictor
 
 
 class ToxicityService:

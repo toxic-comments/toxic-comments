@@ -1,9 +1,8 @@
 from fastapi.params import Depends
 from sqlalchemy.orm import Session
-
-from database import engine
-from inference import ToxicityPredictor
-from service import ToxicityService
+from app.database import engine
+from app.inference import ToxicityPredictor
+from app.service import ToxicityService
 
 
 def get_session():
