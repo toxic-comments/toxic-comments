@@ -3,12 +3,12 @@ from datetime import datetime
 from sqlalchemy.orm import Session
 
 from app.database import ForwardCall
-from app.inference import ToxicityPredictor
+#from app.inference import ToxicityPredictor
+from app.models.base import BaseToxicityPredictor
 
 
 class ToxicityService:
-
-    def __init__(self, session: Session, predictor: ToxicityPredictor):
+    def __init__(self, session: Session, predictor: BaseToxicityPredictor): # немного исправил, теперь класс ожидает на вход произвольную модель, наследницу BaseToxicityPredictor
         self.session = session
         self.predictor = predictor
 

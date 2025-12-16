@@ -13,6 +13,13 @@ docker compose version
 ```shell
 pip install -r requirements.txt
 ```
+---
+Немного доп информации от Кирилла:
+Если вы запускаете код не через докер, а через `fastapi dev app/main.py`, то надо еще следующий код выполнить:
+Надо загрузить помимо requirements еще и модель для предобработки
+```shell
+python -m spacy download ru_core_news_md
+```
 
 Выполнить локальный запуск можно двумя способами: 
 

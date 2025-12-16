@@ -18,7 +18,9 @@ class BaseToxicityPredictor(ABC):
 
 
 @lru_cache(maxsize=1)
-def get_nlp(): # чтобы не создавать тяжелый объект для разных Preprocessor объектов, а использовать один и тот же
+def get_nlp(): 
+    # чтобы не создавать тяжелый объект для разных Preprocessor объектов, а использовать один и тот же
+    # в целом нам это не надо, тк пока все равно модель только одна
     return spacy.load("ru_core_news_md")
 
 class Preprocessor:
