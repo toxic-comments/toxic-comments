@@ -34,6 +34,7 @@ sentry-sdk==2.47.0
 shellingham==1.5.4
 SQLAlchemy==2.0.44
 starlette==0.50.0
+spacy==3.8.11
 typer==0.20.0
 typing-inspection==0.4.2
 typing_extensions==4.15.0
