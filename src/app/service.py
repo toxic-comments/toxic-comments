@@ -1,4 +1,5 @@
 from datetime import datetime
+from email import message
 
 from sqlalchemy.orm import Session
 
@@ -7,6 +8,7 @@ from app.database import ForwardCall
 from app.models.base import BaseToxicityPredictor
 
 from datetime import timedelta
+from fastapi import HTTPException
 
 
 class ToxicityService:
@@ -16,11 +18,19 @@ class ToxicityService:
 
     def get_toxicity_type(self, text: str):
         start = datetime.now()
-        toxicity_type = self.predictor.predict(text)
+
+        if not isinstance(text, str):
+            raise HTTPException(status_code=400, detail="bad request")
+        
+        try:
+            toxicity_type = self.predictor.predict(text)
+        except Exception as e:
+            raise HTTPException(status_code=403, detail="модель не смогла обработать данные")
+        
         end = datetime.now()
 
         # TODO: добавить сохранение еще каких-нибудь параметров запроса
-        forward_call = ForwardCall(start_time=start, finish_time=end)
+        forward_call = ForwardCall(start_time=start, finish_time=end, message=text, result=toxicity_type)
         self.session.add(forward_call)
         self.session.commit()
 
