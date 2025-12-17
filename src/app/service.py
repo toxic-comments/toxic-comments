@@ -5,6 +5,8 @@ from sqlalchemy.orm import Session
 from app.database import ForwardCall
 from app.inference import ToxicityPredictor
 
+from datetime import timedelta
+
 
 class ToxicityService:
 
@@ -23,3 +25,33 @@ class ToxicityService:
         self.session.commit()
 
         return toxicity_type
+    
+    def get_history(self):
+        return (self.session.query(ForwardCall)
+            .order_by(ForwardCall.id.desc())
+            .all()
+        )
+    
+    def delete_history(self):
+        for forward_call in self.get_history():
+            self.session.delete(forward_call)
+        self.session.commit()
+        return 'deleted'
+    
+    def get_stats(self):
+        history = self.get_history()
+        if not history:
+            return {
+                "count": 0,
+                "average": None
+            }
+
+        total = sum(
+            (fc.finish_time - fc.start_time for fc in history),
+            timedelta()
+        )
+
+        return {
+            "count": len(history),
+            "average": total / len(history)
+        }
