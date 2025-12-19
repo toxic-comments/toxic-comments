@@ -6,7 +6,11 @@ RUN apt-get update && apt-get install -y build-essential && rm -rf /var/lib/apt/
 WORKDIR /toxic-comments-app
 COPY --chown=app . .
 RUN pip install --no-cache-dir -r requirements.txt
+
+# загрузить модель для преобработки при инициализации контейнера
 RUN python -m spacy download ru_core_news_md
+# в этом месте вводим название нужной модели (пока есть только одна)
+ENV MODEL_NAME=logreg
 
 USER app
 RUN chmod +x entrypoint.sh
