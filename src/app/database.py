@@ -1,11 +1,13 @@
 import datetime
 import os
 
-from sqlalchemy import DateTime
+from sqlalchemy import DateTime, Text, String
 from sqlalchemy import create_engine
 from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy.orm import Mapped
 from sqlalchemy.testing.schema import mapped_column
+
+from .models.base import ToxicityType
 
 DATABASE_URL = os.getenv("DATABASE_URL", "postgresql+psycopg2://postgres:postgres@localhost:5432/toxic-comments")
 
@@ -22,3 +24,5 @@ class ForwardCall(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     start_time: Mapped[datetime.datetime] = mapped_column(DateTime(), nullable=False)
     finish_time: Mapped[datetime.datetime] = mapped_column(DateTime(), nullable=False)
+    message: Mapped[str] = mapped_column(Text()) 
+    result: Mapped[ToxicityType] = mapped_column(String()) 

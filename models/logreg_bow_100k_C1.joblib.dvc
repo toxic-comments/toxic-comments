@@ -1,0 +1,5 @@
+outs:
+- md5: f42bc8a459b968982ac13ca1ee5239ec
+  size: 8395125
+  hash: md5
+  path: logreg_bow_100k_C1.joblib

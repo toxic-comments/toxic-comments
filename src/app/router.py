@@ -4,7 +4,7 @@ from pydantic import BaseModel
 
 from app.dependencies import get_toxicity_service, get_session
 from app.service import ToxicityService
-
+from .models.base import ToxicityType
 from sqlalchemy.orm import Session
 
 from datetime import datetime
@@ -23,6 +23,8 @@ class ForwardCallSchema(BaseModel):
     id: int
     start_time: datetime
     finish_time: datetime
+    message: str
+    result: ToxicityType
 
 
 router = APIRouter()
