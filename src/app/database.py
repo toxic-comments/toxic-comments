@@ -26,3 +26,23 @@ class ForwardCall(Base):
     finish_time: Mapped[datetime.datetime] = mapped_column(DateTime(), nullable=False)
     message: Mapped[str] = mapped_column(Text()) 
     result: Mapped[ToxicityType] = mapped_column(String()) 
+
+
+class User(Base):
+    __tablename__ = "users"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+
+    username: Mapped[str] = mapped_column(
+    String(100),
+    nullable=False,
+    unique=True)
+
+    password_hash: Mapped[str] = mapped_column(
+    String(255),
+    nullable=False)
+
+    role: Mapped[str] = mapped_column(
+    String(50),
+    nullable=False,
+    default="user")
