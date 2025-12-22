@@ -21,7 +21,7 @@ depends_on: Union[str, Sequence[str], None] = None
 def upgrade() -> None:
     """Upgrade schema."""
     op.add_column('forward_call', sa.Column('message', sa.Text, nullable=False, server_default=''))
-    op.add_column('forward_call', sa.Column('result', sa.String, nullable=False, server_default='pending'))
+    op.add_column('forward_call', sa.Column('result', sa.String, nullable=False, server_default='UNKNOWN'))
 
 def downgrade() -> None:
     """Downgrade schema."""

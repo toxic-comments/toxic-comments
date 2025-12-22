@@ -16,6 +16,7 @@ router = APIRouter(prefix="/auth")
 class RegisterRequest(BaseModel):
     password: str = Field(min_length=8, max_length=128)
     username: str = Field(min_length=3, max_length=100)
+    is_admin: bool = Field(default=False)
 
 
 class Token(BaseModel):
@@ -30,13 +31,10 @@ def register(data: RegisterRequest, session: Session = Depends(get_session),):
     user = User(
         username=data.username,
         password_hash=hash_password(data.password),
-        role="user",
+        role= "admin" if data.is_admin else "user",
     )
     session.add(user)
     session.commit()
-
-    #return {"status": "ok"}
-
 
 @router.post("/login", response_model=Token)
 def login(

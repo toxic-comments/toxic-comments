@@ -29,7 +29,6 @@ class ToxicityService:
         
         end = datetime.now()
 
-        # TODO: добавить сохранение еще каких-нибудь параметров запроса
         forward_call = ForwardCall(start_time=start, finish_time=end, message=text, result=toxicity_type)
         self.session.add(forward_call)
         self.session.commit()
@@ -46,8 +45,7 @@ class ToxicityService:
         for forward_call in self.get_history():
             self.session.delete(forward_call)
         self.session.commit()
-        return 'deleted'
-    
+
     def get_stats(self):
         history = self.get_history()
         if not history:

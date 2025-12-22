@@ -32,7 +32,7 @@ rich==14.2.0
 rich-toolkit==0.17.0
 rignore==0.7.6
 sentry-sdk==2.47.0
-scikit-learn==1.4.2
+scikit-learn>=1.4.2
 shellingham==1.5.4
 SQLAlchemy==2.0.44
 starlette==0.50.0

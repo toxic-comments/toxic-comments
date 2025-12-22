@@ -26,7 +26,7 @@ def get_predictor():
         model_path = os.path.join(BASE_DIR, "../models", "logreg_bow_100k_C1.joblib")
         predictor = LogRegPredictor(model_path=model_path)
         return predictor
-    # в будущем сюда добавляем инициализацию других моделей) Они обязательно должны наследоваться от BaseToxisityPredictor
+    # в будущем сюда добавляем инициализацию других моделей) Они обязательно должны наследоваться от BaseToxicityPredictor
     else:
         raise ValueError(f"Unknown model: {model_name}")
 

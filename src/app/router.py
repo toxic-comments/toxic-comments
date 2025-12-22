@@ -1,15 +1,14 @@
+from datetime import datetime
+
+from app.auth.dependencies import get_current_user, require_admin
+from app.database import User
+from app.dependencies import get_toxicity_service, get_session
+from app.service import ToxicityService
 from fastapi import APIRouter
 from fastapi.params import Depends
 from pydantic import BaseModel
 
-from app.dependencies import get_toxicity_service, get_session
-from app.auth.dependencies import get_current_user, require_admin
-from app.service import ToxicityService
-from .models.base import ToxicityType
-from app.database import User
-from sqlalchemy.orm import Session
-from datetime import datetime
-
+from .database import PredictedClass
 
 
 class MessageData(BaseModel):
@@ -25,7 +24,7 @@ class ForwardCallSchema(BaseModel):
     start_time: datetime
     finish_time: datetime
     message: str
-    result: ToxicityType
+    result: PredictedClass
 
 
 router = APIRouter()

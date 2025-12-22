@@ -1,5 +1,6 @@
 import datetime
 import os
+from enum import Enum
 
 from sqlalchemy import DateTime, Text, String
 from sqlalchemy import create_engine
@@ -7,16 +8,20 @@ from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy.orm import Mapped
 from sqlalchemy.testing.schema import mapped_column
 
-from .models.base import ToxicityType
-
 DATABASE_URL = os.getenv("DATABASE_URL", "postgresql+psycopg2://postgres:postgres@localhost:5432/toxic-comments")
 
-engine = create_engine(DATABASE_URL, echo=True)
+engine = create_engine(DATABASE_URL)
 
 
 class Base(DeclarativeBase):
     pass
 
+class PredictedClass(str, Enum):
+    INSULT = "INSULT"
+    NORMAL = "NORMAL"
+    OBSCENITY = "OBSCENITY"
+    THREAT = "THREAT"
+    UNKNOWN = "UNKNOWN" # нужно для обратной совместимости с запросами, сохраненными ранее
 
 class ForwardCall(Base):
     __tablename__ = "forward_call"
@@ -25,7 +30,7 @@ class ForwardCall(Base):
     start_time: Mapped[datetime.datetime] = mapped_column(DateTime(), nullable=False)
     finish_time: Mapped[datetime.datetime] = mapped_column(DateTime(), nullable=False)
     message: Mapped[str] = mapped_column(Text()) 
-    result: Mapped[ToxicityType] = mapped_column(String()) 
+    result: Mapped[PredictedClass] = mapped_column(String)
 
 
 class User(Base):
