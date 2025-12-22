@@ -1,5 +1,0 @@
-outs:
-- md5: 284fca75a328cc561f72c0b5ff6b3294
-  size: 153371477
-  hash: md5
-  path: comments_parsed.csv
