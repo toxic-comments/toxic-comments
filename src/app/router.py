@@ -49,5 +49,4 @@ def delete_history(toxicity_service: ToxicityService = Depends(get_toxicity_serv
 @router.get("/history/stats")
 def get_stats(toxicity_service: ToxicityService = Depends(get_toxicity_service),
              user: dict = Depends(require_admin)): # ошибка если пользователь не админ
-    # TODO: реализовать получение статистики
     return toxicity_service.get_stats()

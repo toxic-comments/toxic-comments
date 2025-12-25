@@ -10,6 +10,25 @@ from app.models.base import BaseToxicityPredictor
 from datetime import timedelta
 from fastapi import HTTPException
 
+from pydantic import BaseModel
+from typing import Optional
+from datetime import timedelta
+import numpy as np
+
+class DistributionStats(BaseModel):
+    mean_: float
+    p50: float
+    p95: float
+    p99: float
+
+
+class StatsResponse(BaseModel):
+    count_: int
+    processing_time: Optional[DistributionStats]
+    message_length: Optional[DistributionStats]
+    token_count: Optional[DistributionStats]
+
+
 
 class ToxicityService:
     def __init__(self, session: Session, predictor: BaseToxicityPredictor): # немного исправил, теперь класс ожидает на вход произвольную модель, наследницу BaseToxicityPredictor
@@ -46,20 +65,50 @@ class ToxicityService:
             self.session.delete(forward_call)
         self.session.commit()
 
-    def get_stats(self):
-        history = self.get_history()
-        if not history:
-            return {
-                "count": 0,
-                "average": None
-            }
 
-        total = sum(
-            (fc.finish_time - fc.start_time for fc in history),
-            timedelta()
+
+
+
+    def _compute_distribution(self, values: list[float]) -> DistributionStats:
+        arr = np.array(values)
+
+        return DistributionStats(
+            mean_=float(arr.mean()),
+            p50=float(np.percentile(arr, 50)),
+            p95=float(np.percentile(arr, 95)),
+            p99=float(np.percentile(arr, 99)),
         )
 
-        return {
-            "count": len(history),
-            "average": total / len(history)
-        }
+
+    def get_stats(self) -> StatsResponse:
+        history = self.get_history()
+        # print(history)
+        if not history or len(history) == 0:
+            return StatsResponse(
+                count_=0,
+                processing_time=None,
+                message_length=None,
+                token_count=None
+            )
+
+        processing_times = []
+        message_lengths = []
+        token_counts = []
+
+        for fc in history:
+            # время обработки в секундах
+            duration = (fc.finish_time - fc.start_time).total_seconds()
+            processing_times.append(duration)
+
+            # длина сообщения
+            message_lengths.append(len(fc.message))
+
+            # количество токенов = слов
+            token_counts.append(len(fc.message.split()))
+
+        return StatsResponse(
+            count_=len(history),
+            processing_time=self._compute_distribution(processing_times),
+            message_length=self._compute_distribution(message_lengths),
+            token_count=self._compute_distribution(token_counts),
+            )
