@@ -2,13 +2,15 @@
 
 ## Сводная таблица результатов
 
-| Признаки                            | Модель             | F1-macro |
-|-------------------------------------|--------------------|----------|
-| fasttext                            | LightGBM           | 0.75     |
-| fasttext                            | Decision Tree      | 0.54     |
-| w2v                                 | LightGBM           | 0.64     |
-| w2v + custom features               | LightGBM + optuna  | 0.71     |
-| w2v + custom features               | RandomForest       | 0.53     |
+| Признаки              | Модель             | F1-macro |
+|-----------------------|--------------------|----------|
+| fasttext              | LightGBM           | 0.75     |
+| w2v + custom features | LightGBM + optuna  | 0.71     |
+| BoW                   | RandomForest       | 0.65     |
+| w2v                   | LightGBM           | 0.64     |
+| fasttext              | Decision Tree      | 0.54     |
+| w2v + custom features | RandomForest       | 0.53     |
+| custom features       | RandomForest       | 0.42     |
 
 
 ## Описание моделей
