@@ -80,6 +80,8 @@
 
 Время инференса: 1.27 секунд
 
+<img alt="" src="./../images/Balanced_LSTM.png"/>
+
 #### **МОДЕЛЬ 4: УЛУЧШЕННАЯ LSTM**  
 Характеристики:
 - 3 слоя LSTM
@@ -99,7 +101,7 @@
 
 Время инференса: 6.32 секунд
 
-<img alt="" src="./../images/LightGBM.png"/>
+<img alt="" src="./../images/Improved_LSTM.png"/>
 
 #### **МОДЕЛЬ 5: УЛУЧШЕННАЯ LSTM С ВЕСАМИ В CrossEntropyLoss**  
 Характеристики:
