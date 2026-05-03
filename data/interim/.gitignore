@@ -2,3 +2,5 @@
 /X_train.pkl
 /cleaned_comments.csv
 /comments_parsed.csv
+/test.csv
+/train.csv
