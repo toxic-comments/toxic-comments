@@ -25,6 +25,7 @@
 | 5. УЛУЧШЕННАЯ LSTM С ВЕСАМИ В CrossEntropyLoss     | 0.855    |
 | 6. БАЗОВАЯ GRU    | 0.859     |
 | 7. GRU С БАЛАНСИРОВКОЙ КЛАССОВ     | 0.857     |
+| 8. Собственный BERT С БАЛАНСИРОВКОЙ КЛАССОВ | 0.837 |
 
 #### **МОДЕЛЬ 1: VANILLA RNN (BASELINE)**  
 Характеристики:
@@ -157,6 +158,44 @@
 Время обучения: 2.59 минут
 
 Время инференса: 0.29 секунд
+
+
+#### **МОДЕЛЬ 8: (OWN) BERT + CLASSIFICATION FINE-TUING С БАЛАНСИРОВКОЙ КЛАССОВ**
+Хронология:
+1) Сначала обучили токенизатор с размером словаря 30000 и минимальной частотой токена 2
+Время обучения: 2 минуты
+2) Задали конфиг собственному bert:
+- hidden_size=256,
+- num_hidden_layers=4
+- num_attention_heads=4
+- intermediate_size=512
+- max_position_embeddings=512
+3) Токенизировали датасет с максимальной длиной 128
+4) Замаскировали элементы датасета с вероятностью 0.15
+5) Обучили (языковую) модель с такими параметрами:
+- num_train_epochs=3
+- per_device_train_batch_size=32
+- learning_rate=5e-4
+
+    Время обучения: ~45 минут на 2x T4 (kaggle)
+
+    ВАЖНО: языковая модель обучалась на ВСЕХ данных датасета, потому что их всего 250000
+6) Дообучили bert со следующими параметрами:
+- num_train_epochs=10
+- per_device_train_batch_size=32
+- per_device_eval_batch_size=32
+- learning_rate=5e-5
+- eval_strategy="steps"
+- metric_for_best_model="f1_macro"
+- WeightedTrainer с балансировкой (INSULT x 4.0, NORMAL x 1.0, OBSCENITY x 20.0, THREAT x 8.0)
+
+    Время обучения: ~34 минуты на 2х Т4 (kaggle)
+
+    Время инференса: 1.5 минуты (локально на mac m1)
+
+Метрики:
+- F1-macro = 0.837
+- F1-weighted = 0.945
 
 
 **Выводы:**  
