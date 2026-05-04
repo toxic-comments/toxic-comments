@@ -4,3 +4,5 @@
 /comments_parsed.csv
 /test.csv
 /train.csv
+/bert
+/bert-clf3

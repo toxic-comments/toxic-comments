@@ -1,0 +1,6 @@
+outs:
+- md5: d69a23c8d96b91895074441953466d3d.dir
+  size: 40804778
+  nfiles: 5
+  hash: md5
+  path: bert-clf3
