@@ -7,6 +7,7 @@
 |-----------------|-------------------------------------------------------|----------|
 | BERT Embeddings | Finetuned DeepPavlov/rubert-base-cased-conversational | 0.89     | 
 | fasttext        | Улучшенная LSTM                                       | 0.87     |
+| BERT Embeddings | Собственный BERT с балансировкой классов              | 0.837    |
 | BoW             | LogisticRegression                                    | 0.82     | 
 | fasttext        | LightGBM                                              | 0.75     |
 | tf-idf          | CatBoost                                              | 0.74     | 
@@ -28,7 +29,6 @@
 | 5. УЛУЧШЕННАЯ LSTM С ВЕСАМИ В CrossEntropyLoss | 0.855    |
 | 6. БАЗОВАЯ GRU                                 | 0.859    |
 | 7. GRU С БАЛАНСИРОВКОЙ КЛАССОВ                 | 0.857    |
-| 8. Собственный BERT С БАЛАНСИРОВКОЙ КЛАССОВ    | 0.837    |
 
 #### **МОДЕЛЬ 1: VANILLA RNN (BASELINE)**  
 Характеристики:
