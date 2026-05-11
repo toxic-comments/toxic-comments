@@ -5,3 +5,7 @@ __pycache__/
 *.pyc
 *.pyo
 .venv
+**/misc/
+dl-models/wandb/
+**/misc/**
+**/.DS_Store
