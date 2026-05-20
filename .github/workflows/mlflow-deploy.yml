@@ -2,9 +2,9 @@ name: mlflow-deploy.yml
 on:
   push:
     branches:
-      - mlflow-setup
+      - main
     paths:
-      - "mlflow/**"
+      - "mlflow/docker-compose.yml"
 jobs:
   deploy:
     name: Redeploy mlflow instance
