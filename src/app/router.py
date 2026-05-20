@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from app.auth.dependencies import get_current_user, require_admin
+from app.auth.dependencies import get_current_user, require_admin, get_current_bot_user
 from app.database import User
 from app.dependencies import get_toxicity_service, get_session
 from app.service import ToxicityService
@@ -32,7 +32,8 @@ router = APIRouter()
 
 @router.post("/forward")
 def forward(message: MessageData,
-           user: User = Depends(get_current_user), # тут будет ошибка если нет авторизации
+        #    user: User = Depends(get_current_user), # тут будет ошибка если нет авторизации
+            user: User = Depends(get_current_bot_user),
            toxicity_service: ToxicityService = Depends(get_toxicity_service)):
     return ToxicityReport(toxicity_type=toxicity_service.get_toxicity_type(message.text))
 
