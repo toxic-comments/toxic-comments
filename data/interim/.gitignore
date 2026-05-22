@@ -6,3 +6,5 @@
 /train.csv
 /bert
 /bert-clf3
+/train_val.csv
+/val.csv
