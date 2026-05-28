@@ -55,7 +55,7 @@ async def get_current_bot_user(
     if not user:
         user = User(
             id=x_telegram_id, 
-            username="tg_user",
+            username=f"tg_user_{x_telegram_id}",
             password_hash="TG_PASSWORD_klsjhdflkasjhdflakjsdf;asdfsdsssssssl",
             role="user"
             )

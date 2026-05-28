@@ -8,7 +8,8 @@ router = Router()
 async def start_command(message: types.Message):
     await message.answer(
         "Сервис определения токсичности комментариев.\n"
-        "Отправьте текст для проверки.\n"
+        "В личном чате отправьте текст для проверки.\n"
+        "В группе бот отвечает только на токсичные сообщения.\n"
         "Доступные классы: INSULT, NORMAL, OBSCENITY, THREAT"
     )
 
@@ -18,7 +19,8 @@ async def help_command(message: types.Message):
         "Команды:\n"
         "/start - Начать работу\n"
         "/help - Справка\n"
-        "/predict - Анализ текста (использовать как ответ на сообщение)"
+        "/predict - Анализ текста (использовать как ответ на сообщение)\n"
+        "В группе бот автоматически анализирует текстовые сообщения."
     )
 
 @router.message(Command("predict"))
