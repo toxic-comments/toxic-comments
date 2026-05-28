@@ -1,14 +1,23 @@
+import warnings
+
 from joblib import load
+from sklearn.exceptions import InconsistentVersionWarning
+
 from .base import BaseToxicityPredictor, ToxicityType, Preprocessor
 from pathlib import Path
 
 
 class LogRegPredictor(BaseToxicityPredictor):
     def __init__(self, model_path: Path):
-        self.model = load(model_path)
+        self.model = self._load_model(model_path)
         self._classes = self._build_class_mapping()
         self.preprocessor = Preprocessor()
 
+    @staticmethod
+    def _load_model(model_path: Path):
+        with warnings.catch_warnings():
+            warnings.filterwarnings("ignore", category=InconsistentVersionWarning)
+            return load(model_path)
 
     def _build_class_mapping(self) -> dict:
         """
