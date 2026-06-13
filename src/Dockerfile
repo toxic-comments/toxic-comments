@@ -4,9 +4,12 @@ RUN apt-get update && apt-get install -y build-essential && rm -rf /var/lib/apt/
     groupadd --system devops && useradd --system app
 
 WORKDIR /toxic-comments-app
-COPY --chown=app . .
+
+COPY requirements.txt .
 
 RUN pip install --no-cache-dir -r requirements.txt && python -m spacy download ru_core_news_md
+
+COPY --chown=app . .
 
 ENV MODEL_NAME=logreg
 

@@ -8,7 +8,7 @@ services:
     ports:
       - "80:8000"
     environment:
-      - DATABASE_URL=postgresql+psycopg2://postgres:postgres@db:5432/toxic-comments
+      - DATABASE_URL=${DATABASE_URL}
     depends_on:
       db:
         condition: service_healthy
@@ -28,3 +28,16 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+
+  bot:
+    build:
+      context: .
+      dockerfile: Dockerfile.bot
+    container_name: toxic-comments-bot
+    restart: always
+    environment:
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+      - FASTAPI_SERVICE_URL=${FASTAPI_SERVICE_URL}
+      - INTERNAL_API_KEY=${INTERNAL_API_KEY}
+    depends_on:
+      - web
