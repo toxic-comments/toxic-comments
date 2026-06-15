@@ -1,9 +1,10 @@
 import datetime
+import os
 from passlib.context import CryptContext
 from jose import jwt
 
 
-SECRET_KEY = "секретный_ключ_не_пушить_в_гит" # вынести в env TODO
+SECRET_KEY = os.getenv("SECRET_KEY", "секретный_ключ_не_пушить_в_гит")
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60
 

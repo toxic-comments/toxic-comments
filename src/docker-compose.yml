@@ -1,30 +1,30 @@
-version: "3.9"
-
 services:
   web:
     build: .
-    container_name: toxic-comments-app
     restart: always
-    ports:
-      - "80:8000"
     environment:
-      - DATABASE_URL=${DATABASE_URL}
+      DATABASE_URL: postgresql+psycopg2://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@db:5432/${POSTGRES_DB:-toxic-comments}
+      INTERNAL_API_KEY: ${INTERNAL_API_KEY}
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN}
+      SECRET_KEY: ${SECRET_KEY}
+      MODEL_NAME: logreg
+      MODEL_DIR: models/logreg_bow_100k_C1.joblib
+      PORT: 8000
     depends_on:
       db:
         condition: service_healthy
 
   db:
     image: postgres:16
-    container_name: toxic-comments-db
     restart: always
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: toxic-comments
-    ports:
-      - "5432:5432"
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_DB: ${POSTGRES_DB:-toxic-comments}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
       interval: 5s
       timeout: 5s
       retries: 5
@@ -33,11 +33,13 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.bot
-    container_name: toxic-comments-bot
     restart: always
     environment:
-      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
-      - FASTAPI_SERVICE_URL=${FASTAPI_SERVICE_URL}
-      - INTERNAL_API_KEY=${INTERNAL_API_KEY}
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN}
+      FASTAPI_SERVICE_URL: http://web:8000
+      INTERNAL_API_KEY: ${INTERNAL_API_KEY}
     depends_on:
       - web
+
+volumes:
+  postgres_data:
